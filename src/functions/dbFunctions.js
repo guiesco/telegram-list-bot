@@ -80,6 +80,7 @@ module.exports.config = (db) => {
         if(selectedList.isClosed) {
             return 'Unable to remove, list is closed'
         }
+        
         const personBag = selectedList.interestedPpl[userName]
 
         if(desiredQuantity > personBag.desiredQuantity) {

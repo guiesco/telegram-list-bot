@@ -33,12 +33,16 @@ bot.onText(/\/add/, (msg, matches) => {
     const command = messageFunctions.addCommandList(msg.text)
 
     if(typeof command === 'string') {
-        return bot.sendMessage(chatId, command, {parse_mode: 'Markdown'})
+        return bot.sendMessage(chatId, command)
     }
 
-    const list = messageFunctions.parseJsonToMessage(dbFunctions.addQuantityToList(command, msg.from.first_name))
+    const list = dbFunctions.addQuantityToList(command, msg.from.first_name)
 
-    return bot.sendMessage(chatId, list, {parse_mode: 'Markdown'})
+    if(typeof list === 'string') {
+        return bot.sendMessage(chatId, list)
+    }
+
+    return bot.sendMessage(chatId, messageFunctions.parseJsonToMessage(list), {parse_mode: 'Markdown'})
 })
 
 bot.onText(/\/remove/, (msg, matches) => {
@@ -49,9 +53,13 @@ bot.onText(/\/remove/, (msg, matches) => {
         return bot.sendMessage(chatId, command, {parse_mode: 'Markdown'})
     }
 
-    const list = messageFunctions.parseJsonToMessage(dbFunctions.removeQuantityToList(command, msg.from.first_name))
+    const list = dbFunctions.removeQuantityToList(command, msg.from.first_name)
 
-    return bot.sendMessage(chatId, list, {parse_mode: 'Markdown'})
+    if(typeof list === 'string') {
+        return bot.sendMessage(chatId, list)
+    }
+
+    return bot.sendMessage(chatId, messageFunctions.parseJsonToMessage(list), {parse_mode: 'Markdown'})
 })
 
 bot.onText(/\/close/, (msg, matches) => {
