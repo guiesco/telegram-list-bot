@@ -1,0 +1,30 @@
+{
+  "name": "telegramlistbot",
+  "version": "1.0.0",
+  "description": "Bot to create and manage lists on telegram.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon src/index.js --ignore '*.json'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guiesco/telegram-list-bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "list"
+  ],
+  "author": "Gui Escobar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guiesco/telegram-list-bot/issues"
+  },
+  "homepage": "https://github.com/guiesco/telegram-list-bot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "node-telegram-bot-api": "^0.58.0",
+    "simple-json-db": "^2.0.0"
+  }
+}
