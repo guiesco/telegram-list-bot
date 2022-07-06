@@ -13,8 +13,6 @@ const actives = process.env.ACTIVES
 const bot = new botApi(token, { polling: true })
 
 bot.onText(/\/create/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.createCommandList(msg.text)
 
@@ -31,8 +29,6 @@ bot.onText(/\/create/, (msg, matches) => {
 })
 
 bot.onText(/\/add/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.addCommandList(msg.text)
 
@@ -46,8 +42,6 @@ bot.onText(/\/add/, (msg, matches) => {
 })
 
 bot.onText(/\/remove/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.addCommandList(msg.text)
 
@@ -61,8 +55,6 @@ bot.onText(/\/remove/, (msg, matches) => {
 })
 
 bot.onText(/\/close/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.singleCommandList(msg.text)
 
@@ -76,8 +68,6 @@ bot.onText(/\/close/, (msg, matches) => {
 })
 
 bot.onText(/\/delete/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.singleCommandList(msg.text)
 
@@ -95,8 +85,6 @@ bot.onText(/\/delete/, (msg, matches) => {
 })
 
 bot.onText(/\/pay/, (msg, matches) => {
-    console.log(msg)
-
     const chatId = msg.chat.id
     const command = messageFunctions.singleCommandList(msg.text)
 
@@ -112,6 +100,9 @@ bot.onText(/\/pay/, (msg, matches) => {
 bot.onText(/\/lists$/, (msg, matches) => {
     const chatId = msg.chat.id
     const allLists = Object.values(dbFunctions.getAllActiveLists())
+    if(allLists.length === 0) {
+        return bot.sendMessage(chatId, 'There are no lists.')
+    }
     let message = ''
     allLists.forEach((list) => {
         message += messageFunctions.parseJsonToMessage(list)
