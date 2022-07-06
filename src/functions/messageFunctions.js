@@ -34,8 +34,9 @@ module.exports.singleCommandList = (message) => {
     }
 }
 
-module.exports.parseJsonToMessage = ({id, listName, listPrice, listMinValue, interestedPpl, totalRequested, totalPaid, amountToPay}) => {
-    let message = `*${id} - ${listName} R$${listPrice} min. ${listMinValue}*`
+module.exports.parseJsonToMessage = ({id, listName, listPrice, listMinValue, interestedPpl, totalRequested, totalPaid, amountToPay, isClosed}) => {
+    const closed = isClosed ? ' - Fechada' : ''
+    let message = `*${id} - ${listName} R$${listPrice} min. ${listMinValue}${closed}*`
     
     for(let ppl in interestedPpl) {
         const personObject = interestedPpl[ppl]
@@ -49,7 +50,7 @@ module.exports.parseJsonToMessage = ({id, listName, listPrice, listMinValue, int
 
     message += `
     *Total*: ${totalRequested}g 
-    *Pago*: ${totalPaid}/${amountToPay} reais`    
+    *Pago*: ${totalPaid}/${amountToPay} reais | ${totalPaid/amountToPay * 100}%`    
 
     return message
 }
