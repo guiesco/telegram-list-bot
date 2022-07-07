@@ -1,13 +1,14 @@
 module.exports.createCommandList = (message) => {
     const messageArray = message.split(' ')
-    if(messageArray.length < 4) {
+    const arrayLength = messageArray.length
+    if(arrayLength < 4) {
         return 'Missing parameter. Message should be /create ${listName} ${listPrice} ${listMinValue}.'
     }
     return {
         command: messageArray[0],
-        listName: messageArray[1],
-        listPrice: parseInt(messageArray[2]),
-        listMinValue: messageArray[3]
+        listName: Array.from(messageArray).splice(1, arrayLength - 3).reduce((acc, i) => acc +' '+ i, ''),
+        listPrice: parseInt(messageArray[arrayLength - 2]),
+        listMinValue: messageArray[arrayLength - 1]
     }
 }
 
@@ -50,7 +51,7 @@ module.exports.parseJsonToMessage = ({id, listName, listPrice, listMinValue, int
 
     message += `
     *Total*: ${totalRequested}g 
-    *Pago*: ${totalPaid}/${amountToPay} reais | ${totalPaid/amountToPay * 100}%`    
+    *Pago*: ${totalPaid}/${amountToPay} reais | ${(totalPaid/amountToPay * 100)||0}%`
 
     return message
 }
