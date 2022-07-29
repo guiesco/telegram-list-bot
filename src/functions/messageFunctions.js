@@ -51,7 +51,7 @@ module.exports.parseJsonToMessage = ({id, listName, listPrice, listMinValue, int
 
     message += `
     *Total*: ${totalRequested}g 
-    *Pago*: ${totalPaid}/${amountToPay} reais | ${(totalPaid/amountToPay * 100)||0}%`
+    *Pago*: ${totalPaid}/${amountToPay} reais | ${ (totalPaid/amountToPay * 100).toFixed(2) || 0}%`
 
     return message
 }
