@@ -27,7 +27,7 @@ module.exports.config = (db) => {
         return idCount
     }
 
-    const createNewListItem = ({listName, listPrice, listMinValue}, userName) => {
+    const createNewListItem = ({ listName, listPrice, listMinValue }, userName) => {
         const activeList = getAllActiveLists()
         const newListItem = {
             id: getIdCount(),
@@ -45,24 +45,24 @@ module.exports.config = (db) => {
         activeList[newListItem.id] = newListItem
 
         setActiveList(activeList)
-        
+
         return newListItem
     }
 
-    const addQuantityToList = ({listId, desiredQuantity}, userName) => {
+    const addQuantityToList = ({ listId, desiredQuantity }, userName) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
 
-        if(selectedList.isClosed) {
+        if (selectedList.isClosed) {
             return 'Unable to add, list is closed'
         }
 
         const personBag = selectedList.interestedPpl[userName]
-        
+
         if (!personBag) {
-            selectedList.interestedPpl[userName] = {desiredQuantity, paid: false}
+            selectedList.interestedPpl[userName] = { desiredQuantity, paid: false }
         } else {
-            selectedList.interestedPpl[userName] = {desiredQuantity: desiredQuantity + personBag.desiredQuantity, paid: personBag.paid}
+            selectedList.interestedPpl[userName] = { desiredQuantity: desiredQuantity + personBag.desiredQuantity, paid: personBag.paid }
         }
 
         selectedList.totalRequested += desiredQuantity
@@ -73,21 +73,21 @@ module.exports.config = (db) => {
         return selectedList
     }
 
-    const removeQuantityToList = ({listId, desiredQuantity}, userName) => {
+    const removeQuantityToList = ({ listId, desiredQuantity }, userName) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
 
-        if(selectedList.isClosed) {
+        if (selectedList.isClosed) {
             return 'Unable to remove, list is closed'
         }
-        
+
         const personBag = selectedList.interestedPpl[userName]
 
-        if(desiredQuantity > personBag.desiredQuantity) {
+        if (desiredQuantity >= personBag.desiredQuantity) {
             desiredQuantity = personBag.desiredQuantity
             delete selectedList.interestedPpl[userName]
         } else {
-            selectedList.interestedPpl[userName] = {desiredQuantity: personBag.desiredQuantity - desiredQuantity, paid: personBag.paid}
+            selectedList.interestedPpl[userName] = { desiredQuantity: personBag.desiredQuantity - desiredQuantity, paid: personBag.paid }
         }
 
         selectedList.totalRequested -= desiredQuantity
@@ -98,13 +98,13 @@ module.exports.config = (db) => {
         return selectedList
     }
 
-    const payList = ({listId, desiredQuantity}, userName) => {
+    const payList = ({ listId, desiredQuantity }, userName) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
         const personBag = selectedList.interestedPpl[userName]
         const amountPayedNow = personBag.desiredQuantity * selectedList.listPrice
 
-        if(personBag.paid) {
+        if (personBag.paid) {
             return selectedList
         }
 
@@ -116,7 +116,7 @@ module.exports.config = (db) => {
         return selectedList
     }
 
-    const closeList = ({listId}, userName) => {
+    const closeList = ({ listId }, userName) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
 
@@ -129,7 +129,7 @@ module.exports.config = (db) => {
         return selectedList
     }
 
-    const deleteList = ({listId}, userName) => {
+    const deleteList = ({ listId }, userName) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
 
@@ -142,7 +142,7 @@ module.exports.config = (db) => {
         return activeList
     }
 
-    const showList = ({listId}) => {
+    const showList = ({ listId }) => {
         const activeList = getAllActiveLists()
         const selectedList = activeList[listId]
         return selectedList
