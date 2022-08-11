@@ -135,6 +135,8 @@ module.exports.config = (db) => {
 
         if (selectedList.owner === userName) {
             delete activeList[listId]
+        } else {
+            return 'Unable to delete, you are not the owner. The owner is ' + selectedList.owner
         }
 
         setActiveList(activeList)
